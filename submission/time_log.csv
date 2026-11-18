@@ -1,1 +1,122 @@
 step,images,minutes,note
+step,images,minutes,note
+0,img_003,3, 22 vật 
+1,img_003,2, Không có 
+2,img_003,3, xóa 2 vật thể đánh là three_wheeler vì chỉ nhìn thấy dưới 20% vật và 2 three_wheeler vì đánh cùng lên một vật thể
+3,img_003,3, 2 truck bị gán nhầm thành three_wheeler
+4,img_003,3, 4 vật thể bị lỏng 
+0,img_004,2,8 vật 
+1,img_004,2, 2 cái three_wheeler chưa đánh 
+2,img_004,2, không có
+3,img_004,2, không có
+4,img_004,2, 1 car 
+0,img_005,2,26 vật 
+1,img_005,2, thiếu 1 truck
+2,img_005,2, thiếu 1 xe máy 
+3,img_005,2, có 1 cái tủ điện bị đánh nhầm thành three_wheeler
+4,img_005,2, không có
+0,img_006,2,18 vật 
+1,img_006,2, không có
+2,img_006,2, không có 
+3,img_006,2, không có
+4,img_006,2, không có
+0,img_008,2,14 vật 
+1,img_008,2, Thiếu 2 box person
+2,img_008,2, Thừa 1 three_wheeler
+3,img_008,2, không có
+4,img_008,2, Sửa 2 box three_wheeler và 1 box person
+0,img_009,2,4 vật 
+1,img_009,2, Không có
+2,img_009,2, Thừa 1 three_wheeler
+3,img_009,2, Đánh nhầm motorbike thành three_wheeler
+4,img_009,2, Sửa motorbike
+0,img_010,2, 9 vật 
+1,img_010,2, Không có
+2,img_010,2, Thừa 1 three_wheeler
+3,img_010,2, sai nhãn 1 person bị gán thành bicycle
+4,img_010,2, không có 
+0,img_013,2, 10 vật 
+1,img_013,2, Không có
+2,img_013,2, Thừa 3 box 
+3,img_013,2, sai nhãn 1 bus thành three_wheeler
+4,img_013,2, không có 
+0,img_014,2, 16 vật 
+1,img_014,2, Không có
+2,img_014,2, Thừa 3 box 
+3,img_014,2, Không có
+4,img_014,2, không có 
+0,img_017,2, 5 vật 
+1,img_017,2, Không có
+2,img_017,2, Không có
+3,img_017,2, Không có
+4,img_017,2, Sửa kích thước 2 box three_wheeler
+0,img_018,2, 42 vật 
+1,img_018,2, Không có
+2,img_018,2, Không có
+3,img_018,2, sai nhãn 1 bus thành three_wheeler và 1 motorbike bị gán thành bicycle
+4,img_018,2, Không có
+0,img_021,2, 33 vật 
+1,img_021,2, Không có
+2,img_021,2, Không có
+3,img_021,2, Không có
+4,img_021,2, Không có
+0,img_022,2, 9 vật 
+1,img_022,2, Không có
+2,img_022,2, Thừa 1 box person
+3,img_022,2, Không có
+4,img_022,2, Không có
+0,img_023,2, 11 vật 
+1,img_023,2, Không có
+2,img_023,2, Thừa 2 box three_wheeler
+3,img_023,2, Không có
+4,img_023,2, Chỉnh lại 1 box three_wheeler
+0,img_024,2, 11 vật 
+1,img_024,2, Không có
+2,img_024,2, Thừa 2 box 
+3,img_024,2, Sai nhãn 3 box 
+4,img_024,2, Không có
+0,img_025,2, 12 vật 
+1,img_025,2, Không có
+2,img_025,2, Thừa 1 box motorbike
+3,img_025,2, Không có
+4,img_025,2, Không có
+0,img_026,2, 10 vật 
+1,img_026,2, Không có
+2,img_026,2, Thừa 1 box truck
+3,img_026,2, Không có
+4,img_026,2, Không có
+0,img_027,2, 20 vật 
+1,img_027,2, Không có
+2,img_027,2, Không có
+3,img_027,2, Không có
+4,img_027,2, Không có
+0,img_028,2, 30 vật 
+1,img_028,2, Không có
+2,img_028,2, Không có
+3,img_028,2, sai person bị gán thành bicycle
+4,img_028,2, Không có
+0,img_029,2, 20 vật 
+1,img_029,2, Không có
+2,img_029,2, Không có
+3,img_029,2, Không có
+4,img_029,2, Không có
+0,img_030,2, 3 vật 
+1,img_030,2, Không có
+2,img_030,2, thừa 1 box car
+3,img_030,2, Không có
+4,img_030,2, lỏng 1 box bicycle
+0,img_033,2, 14 vật 
+1,img_033,2, Không có
+2,img_033,2, Không có
+3,img_033,2, Không có
+4,img_033,2, Không có
+0,img_034,2, 22 vật 
+1,img_034,2, Không có
+2,img_034,2, Không có
+3,img_033,2, Sai nhãn truck thành three_wheeler
+4,img_034,2, Không có
+0,img_035,2, 27 vật 
+1,img_035,2, Không có
+2,img_035,2, Thừa 1 nhãn three_wheeler
+3,img_035,2, Không có
+4,img_035,2, Không có
