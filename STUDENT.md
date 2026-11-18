@@ -5,8 +5,8 @@
 - Lớp (L2 / L3 / khác): L2
 - Tài khoản GitHub: [STSGx5](https://github.com/STSGx5)
 - Repo bài nộp (URL): [Repo](https://github.com/STSGx5/K5-L23-Day08-2A202603277-TranDucKy-AI-Assisted-Labeling.git)
-- Commit chốt bài (hash): [CẦN BẠN ĐIỀN sau khi commit: `git rev-parse --short HEAD`]
-- Máy: Windows, không có GPU (chạy CPU) [CẦN BẠN XÁC NHẬN]
+- Commit chốt bài (hash): 
+- Máy: Windows, không có GPU (chạy CPU) 
 - CVAT (Docker): [CẦN BẠN ĐIỀN: phiên bản, ví dụ v2.81.0]
 
 ## Kết quả tóm tắt (điền cuối bài; số lấy từ `submission/qc/*`, kèm mẫu số)
