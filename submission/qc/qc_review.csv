@@ -1,6 +1,8 @@
 image,object_id,error_type,reviewer,note
-img_004.jpg,,,,
-img_008.jpg,,,,
-img_018.jpg,,,,
-img_022.jpg,,,,
-img_031.jpg,,,,
+img_003.jpg,20,thua,claude-nhap (can ban xac nhan),"box three_wheeler conf 0.20 ở bên phải, chỗ nhìn thấy xe máy và người đứng chứ không thấy xe ba bánh. Khá chắc"
+img_003.jpg,10,thua,claude-nhap (can ban xac nhan),"box truck conf 0.25 nhỏ ở mép trái xa, nhìn như mái bạt xanh. CHUA CHAC, cần xem lại ảnh gốc"
+img_006.jpg,68,thua,claude-nhap (can ban xac nhan),"box car conf 0.55 giữa hẻm, không thấy ô tô rõ ràng (ảnh nhiều người che). CHUA CHAC, cần xem lại"
+img_006.jpg,,sai_vi_tri_kich_thuoc,claude-nhap (can ban xac nhan),một box motorbike conf 0.70 bao nhiều xe máy đỗ sát nhau ở bên trái (không đọc được id vì nhãn bị che); liên quan câu mở 2 của guideline v1.0. CHUA CHAC
+img_014.jpg,,khong,claude-nhap (can ban xac nhan),không thấy lỗi rõ; cụm người và xe máy chồng nhau ở góc phải chưa kiểm hết được
+img_031.jpg,367,sai_vi_tri_kich_thuoc,claude-nhap (can ban xac nhan),"box person kết thúc ở khoảng eo, phần thân dưới (chân sau xe đạp) nằm ngoài box. Khá chắc"
+img_035.jpg,,khong,claude-nhap (can ban xac nhan),"không thấy lỗi rõ; nhóm người ngồi và đứng chồng nhau ở bên trái, các xe máy xa ở giữa chưa kiểm hết được"
