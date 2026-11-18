@@ -77,6 +77,15 @@
 **Quyết định: Rework**, ngày 2026-11-18. Lý do (đi theo Hold → Rework → Release): không Hold vì guideline đủ rõ để quyết các ca đã gặp và dữ liệu không hỏng; Rework vì ảnh lỗi 3/5 = 60% > 2%, lỗi `thua` lặp lại (3/5 lỗi, quy tắc cho box conf thấp chưa đủ chặt), và bắt bẫy mù ở vòng duyệt đầu chỉ 6/12 = 50% < 80%. Chưa thể Release.
 Nếu Rework / Hold, việc cần làm tiếp: sửa các box lỗi ở img_003, img_006, img_031 trong CVAT rồi export `labels/qc_fixed.json`, chạy lại `build_release.py`; thêm quy tắc bỏ box `three_wheeler`/`truck`/`car` có conf thấp khi không thấy vật rõ vào guideline v1.1; chốt câu mở 2 (xe máy đỗ dày: từng xe hay `ignore_region`); lấy mẫu QC mới (seed khác, có ca `can_review`) sau khi sửa.
 
+### Vòng 2 (sau Rework)
+
+- **Việc đã sửa:** sửa nhãn img_003, img_006, img_031 trong CVAT, export `labels/qc_fixed.json` (3 ảnh, 40 box), chạy lại `build_release.py`: 434 xuống 431 đối tượng (xoá `three_wheeler` conf 0.20 và `truck` conf 0.25 ở img_003, xoá `car` #68 và thay box `motorbike` gộp bằng `ignore_region` ở img_006, kéo dài box `person` #367 ở img_031). Vòng 1 giữ ở `qc/qc_review_round1.csv` và `qc/qc_report_round1.md`.
+- **Mẫu mới:** 5 ảnh ngẫu nhiên (seed 7; 0 ảnh `can_review`) trong 24 ảnh batch, 76 đối tượng: img_004, img_008, img_018, img_022, img_031 (nguồn `qc/qc_sample.csv`). Người kiểm: tôi, tự nhìn ảnh gốc, không dùng AI soạn nháp. **Hạn chế:** tôi vừa là người duyệt vừa là người kiểm.
+- **Lỗi theo đối tượng:** 0/76 = 0,0%. **Lỗi theo ảnh:** 0/5 = 0,0% (ngưỡng Release ≤ 2%). Không có lỗi lặp lại. Bắt bẫy 11/12 = 91,7% (ngưỡng 80%).
+- **Giới hạn mẫu nhỏ** (`qc_report_auto.md`): 0 ảnh lỗi trong 5 ảnh, cận trên Wilson 95% của tỉ lệ ảnh lỗi thật là 43%. Mẫu 5 ảnh không thể chứng minh ngưỡng 2%. Chỉ có img_031 trùng với vòng 1 nên mẫu này chưa kiểm lại img_003 và img_006. `bo_sot` kiểm bằng mắt nên có thể vẫn sót ở ảnh đông. Script chỉ đếm theo phiếu, không tự phát hiện box lỏng hay vật bị cả máy và tôi cùng bỏ sót.
+
+**Quyết định vòng 2: Release**, ngày 2026-11-18. Lý do: ảnh lỗi 0/5 = 0% ≤ 2%, không còn lỗi hệ thống `thua` sau khi áp CAL-01, bắt bẫy 91,7% ≥ 80%, guideline v1.1 đủ rõ. Đây là Release với độ tin cậy thấp do mẫu nhỏ; nếu có thêm thời gian sẽ lấy mẫu thứ hai gồm img_003 và img_006.
+
 ## 8. Ghi chú cá nhân
 
 - **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): Claude: đưa ra các lệnh để chạy bài làm 
