@@ -121,4 +121,4 @@ step,images,minutes,note
 3,img_035,2, Không có
 4,img_035,2, Không có
 batch_review,24,244,"duyệt 24 ảnh batch (5 bước checklist/ảnh)
-gold_manual,4,~20,Không có 
+gold_manual,4,20,Không có 
