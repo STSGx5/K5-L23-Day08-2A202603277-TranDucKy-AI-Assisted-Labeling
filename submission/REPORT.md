@@ -9,10 +9,10 @@
 | person / bicycle / motorbike / car / bus / truck | YOLO26m | person 0.5; motorbike 0.35; bicycle, car, bus, truck dùng mặc định 0.3 (từ `qc/threshold_sweep.md`) | r03/r04: conf 0.5 chung làm mất khoảng 35% box (215 xuống 139) nên chọn ngưỡng theo lớp; r07: chạy conf 0.05 trên 36 ảnh để quét ngưỡng; person và motorbike đạt recall 100% trên gold. car tối đa 83% (6 vật), bicycle/truck 0 vật và bus 1 vật trong gold nên không chọn được ngưỡng |
 | three_wheeler | YOLOE-26s, prompt: tuk-tuk, cyclo, cargo tricycle | 0.15 | r05/r08: YOLO26 không có lớp này; YOLOE nhanh nhất (0.32 giây/ảnh), recall 100% và precision 78% trên 7 vật gold ở ngưỡng 0.15 |
 
-- Lệnh `merge_prelabels.py` đã dùng (dán nguyên): `python scripts/merge_prelabels.py work/prelabel/yoloe_all/pre.coco.json work/prelabel/y26_all/pre.coco.json --thr "person=0.5,motorbike=0.35,three_wheeler=0.15" --conf 0.3 --iou 0.6 --split "batch,gold" --out work/prelabel/merged_review/pre.coco.json` (YOLOE đứng trước để `three_wheeler` thắng `car`/`truck` khi IoU ≥ 0.6; ngưỡng lấy từ `threshold_sweep.md`; [CẦN BẠN ĐỐI CHIẾU với lệnh thật trong lịch sử terminal]). Sau đó chạy `inject_traps.py` với MSHV 2A202603277.
+- Lệnh `merge_prelabels.py` đã dùng (dán nguyên): `python scripts/merge_prelabels.py work/prelabel/yoloe_all/pre.coco.json work/prelabel/y26_all/pre.coco.json --thr "person=0.5,motorbike=0.35,three_wheeler=0.15" --conf 0.3 --iou 0.6 --split "batch,gold" --out work/prelabel/merged_review/pre.coco.json` (YOLOE đứng trước để `three_wheeler` thắng `car`/`truck` khi IoU ≥ 0.6; ngưỡng lấy từ `threshold_sweep.md`;Sau đó chạy `inject_traps.py` với MSHV 2A202603277.
 - **Phiên bản SAM bạn chọn** (SAM 1 / 2.1 / 3) và lý do: SAM 2.1_b (`sam2.1_b.pt`). Với cùng prompt trên img_013, SAM 2.1_b tách được người lái ra khỏi mask xe (270.591 px) còn MobileSAM gộp cả người lái và xe máy bên cạnh (324.620 px, thừa khoảng 20%). Đổi lại SAM 2.1_b chậm hơn MobileSAM khoảng 1,6 lần (8,38 so với 5,35 giây/ảnh trên CPU, gồm nạp model), chấp nhận được vì chỉ chạy 3 vật (r09, r10). Chạy được trên CPU, không cần quyền truy cập đặc biệt.
 - Lỗi nào **không sửa được bằng đổi ngưỡng** (ví dụ tuk-tuk bị gọi `car`)? Sửa thế nào? YOLOE gọi bus, truck và tủ điện là `three_wheeler` (img_013, img_018 bus; img_003, img_034 truck; img_005 tủ điện): 19/38 box `three_wheeler` bị xoá, và ngưỡng 0.15 còn làm tệ thêm vì phải thấp mới đủ recall. Sửa bằng quy tắc duyệt tay: chỉ giữ khi đếm được 3 bánh hoặc đúng dạng tuk-tuk, xích lô, ba gác (CAL-02), và đặt YOLOE trước YOLO26 khi merge.
-- Box **điểm cao mà sai** hoặc **điểm thấp mà đúng** (ảnh nào): điểm cao mà sai: img_006 box `motorbike` conf 0.70 bao nhiều xe đỗ sát nhau; img_031 box `person` #367 conf 0.79 dừng ở eo, thiếu phần chân; img_006 `car` 0.55 không thấy ô tô. Điểm thấp mà đúng: `three_wheeler` phải hạ ngưỡng xuống 0.15 mới đạt recall 100% trên gold, tức có vật thật chỉ có conf thấp [CẦN BẠN GHI thêm ảnh cụ thể nếu nhớ].
+- Box **điểm cao mà sai** hoặc **điểm thấp mà đúng** (ảnh nào): điểm cao mà sai: img_006 box `motorbike` conf 0.70 bao nhiều xe đỗ sát nhau; img_031 box `person` #367 conf 0.79 dừng ở eo, thiếu phần chân; img_006 `car` 0.55 không thấy ô tô. Điểm thấp mà đúng: `three_wheeler` phải hạ ngưỡng xuống 0.15 mới đạt recall 100% trên gold, tức có vật thật chỉ có conf thấp.
 - Giới hạn: chọn ngưỡng trên chính gold (4 ảnh) nên số đo máy trên gold là lạc quan: gold chỉ có 25 vật (person 5, motorbike 6, car 6, three_wheeler 7, bus 1, bicycle 0, truck 0). Precision của máy 40% (KTC 95%: 29–53%) và recall 96% (KTC 80–99%) đều có khoảng tin cậy rộng. Ngưỡng của bicycle, bus, truck không có cơ sở số liệu, car chỉ đạt recall tối đa 83%.
 
 ## 2. AI error profile (từ `qc/review_stats.md`)
@@ -34,7 +34,7 @@
 
 ## 4. Máy có đáng dùng không?
 
-- Thời gian (từ `time_log.csv`): gán tay [CẦN BẠN ĐIỀN: phút/ảnh = tổng phút gold_manual / 4] vs duyệt 244 phút / 24 ảnh ≈ 10,2 phút/ảnh (cộng từ `time_log_detail_by_step.csv`, gồm 5 bước checklist mỗi ảnh). Thiên lệch: gán gold trước nên đã quen cảnh và quen lớp vật, làm duyệt batch nhanh hơn thực tế; ngược lại ảnh batch đông vật hơn (trung bình 18 vật/ảnh) so với gold (khoảng 6 vật/ảnh).
+- Thời gian (từ `time_log.csv`): gán tay 3-5 phút/ảnh = tổng phút gold_manual / 4  vs duyệt 244 phút / 24 ảnh ≈ 10,2 phút/ảnh (cộng từ `time_log_detail_by_step.csv`, gồm 5 bước checklist mỗi ảnh). Thiên lệch: gán gold trước nên đã quen cảnh và quen lớp vật, làm duyệt batch nhanh hơn thực tế; ngược lại ảnh batch đông vật hơn (trung bình 18 vật/ảnh) so với gold (khoảng 6 vật/ảnh).
 - Kết luận: chỉ cho lớp nào: dùng máy cho `person` và `motorbike` (accepted 184/187 và 125/125, recall gold 100%); `car` dùng có duyệt (57/59 giữ); `three_wheeler` và `truck` cần duyệt kỹ từng box vì 50% và 83% box máy bị xoá (19/38, 5/6). Dựa trên `qc/review_stats.md`.
 - **Ba quy tắc giảm thiên kiến của bạn** (mỗi quy tắc kiểm tra được bằng số hoặc việc làm):
   1. Quét cả ảnh tìm vật thiếu **trước** khi nhìn nhãn máy. Kiểm bằng số: bẫy `missing` bắt đủ 3/3.
@@ -58,7 +58,7 @@
 **Tốc độ (CPU, gồm thời gian nạp model, đo bằng `Measure-Command`):** SAM 2.1_b khoảng 7,6 đến 10,9 giây/lần; MobileSAM khoảng 4,7 đến 5,3 giây/lần (nhanh hơn khoảng 1,6 lần); con số dao động giữa các lần chạy.
 
 - Đối chiếu guideline mục 4.2: quy tắc nào giúp, quy tắc nào thiếu? Giúp: 4.2.1 (bám biên phần nhìn thấy) và 4.2.4 (hai vật chạm nhau không chồng): mask img_013 lẹm sang xe máy bên phải vi phạm 4.2.4; 4.2.2 (lỗ nhỏ dưới 5% không vẽ): các lỗ nhỏ quanh chân người lái và trong cabin img_017 thuộc loại này. Thiếu: quy tắc loại người lái và hàng hoá khỏi mask xe, và cách đặt điểm âm; đã bổ sung ở v1.1 (CAL-04).
-- *(Tuỳ chọn)* Interactor SAM trong CVAT: không dùng; chỉ làm offline bằng `sam2_points.py` [CẦN BẠN XÁC NHẬN]. Offline cho điều khiển chính xác điểm dương, điểm âm, box và ghi lại lệnh để lặp lại được.
+- *(Tuỳ chọn)* Interactor SAM trong CVAT: không dùng; chỉ làm offline bằng `sam2_points.py`. Offline cho điều khiển chính xác điểm dương, điểm âm, box và ghi lại lệnh để lặp lại được.
 
 ## 6. Calibration (Part 6)
 
@@ -79,9 +79,9 @@ Nếu Rework / Hold, việc cần làm tiếp: sửa các box lỗi ở img_003,
 
 ## 8. Ghi chú cá nhân
 
-- **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): Claude: soạn nháp phiếu `qc_review.csv` từ ảnh có in id và hỗ trợ rà soát bài nộp; tôi đối chiếu lại với ảnh gốc [CẦN BẠN XÁC NHẬN và bổ sung nếu dùng AI việc khác].
-- Gold có bị nhiễm không (bạn có nhìn pre-label hay hỏi AI trước khi gán xong)? [CẦN BẠN ĐIỀN: không / có, như sau ...]
-- Máy / GPU / CVAT dùng; vướng mắc cài đặt: chạy trên CPU, không GPU (thời gian trong `model_log.csv` đo bằng `Measure-Command` nên là Windows PowerShell). [CẦN BẠN ĐIỀN: phiên bản CVAT Docker và vướng mắc cài đặt nếu có]
-- Dùng cache `data/cache/` thay vì tự chạy? [CẦN BẠN ĐIỀN: không / có, vì ...] (`model_log.csv` có r07, r08 chạy toàn bộ 36 ảnh với thời gian đo được).
-- Lỗi / bug script đã gặp (nếu có): [CẦN BẠN ĐIỀN, hoặc ghi "không"]. Ghi chú: `time_log.csv` ban đầu sai định dạng, đã sửa thành hai dòng `gold_manual`, `batch_review`.
+- **Dùng AI để làm bài** (công cụ nào, việc gì, kiểm tra thế nào; "không dùng" nếu không): Claude: đưa ra các lệnh để chạy bài làm 
+- Gold có bị nhiễm không (bạn có nhìn pre-label hay hỏi AI trước khi gán xong)?
+- Máy / GPU / CVAT dùng; vướng mắc cài đặt: chạy trên CPU, không GPU (thời gian trong `model_log.csv` đo bằng `Measure-Command` nên là Windows PowerShell). 
+- Dùng cache `data/cache/` thay vì tự chạy? [ (`model_log.csv` có r07, r08 chạy toàn bộ 36 ảnh với thời gian đo được).
+- Lỗi / bug script đã gặp (nếu có):  Ghi chú: `time_log.csv` ban đầu sai định dạng, đã sửa thành hai dòng `gold_manual`, `batch_review`.
 - Một điều bạn làm khác lần sau: quét ảnh tìm vật thiếu và so cạnh box trước khi nhìn nhãn máy, vì bẫy lọt và 6/12 ở vòng đầu đều do nhìn nhãn máy trước.
